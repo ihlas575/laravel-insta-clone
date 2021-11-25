@@ -21,10 +21,10 @@ class NewsFeedPage extends Component
     {
         $userId = 12;
 
-        $posts = Post::query()
-        ->withCount(['likes AS post_like' => function ($query) use($userId) {
+        $posts = Post::withCount(['likes AS own_like' => function ($query) use($userId) {
             $query->where('user_id', '=', $userId);
         }])
+        ->withCount('likes as post_like')
         ->limit(10)
         ->get();
 
