@@ -15,8 +15,9 @@
     </div>
     <div class="flex justify-between px-4 py-4">
         <div class="flex gap-4">
-            <img loading="lazy" src="https://img.icons8.com/material-outlined/24/000000/like--v1.png"
-                class="h-6 cursor-pointer" />
+            <img loading="lazy"
+                src="{{ $postLikes > 0 ? 'https://img.icons8.com/color/48/000000/like--v3.png':'https://img.icons8.com/material-outlined/24/000000/like--v1.png' }}"
+                class="h-6 cursor-pointer" wire:click="like({{ $postId }})" />
             <img loading="lazy" src="https://img.icons8.com/material-outlined/24/000000/sms.png"
                 class="h-6 cursor-pointer" />
             <img loading="lazy" src="https://img.icons8.com/material-rounded/24/000000/telegram-app.png"
@@ -28,7 +29,7 @@
         </div>
     </div>
     <div class="px-4 pt-1 pb-4">
-        <p class="font-semibold text-base mb-1">12 likes</p>
+        <p class="font-semibold text-base mb-1">{{ $postLikes }} likes</p>
         <div class="pb-4">
             <p class="font-semibold text-sm"> {{ $creator }}</p>
             <p>

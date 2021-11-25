@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -17,11 +18,15 @@ class NewsFeedPage extends Component
     }
 
     public function render()
-    {        
-       $posts = DB::table('posts')
-                ->join('users', 'users.id', '=', 'posts.user_id')
-                ->orderByDesc('posts.created_at')
-                ->get();
+    {
+        $userId = 12;
+
+        $posts = Post::query()
+        ->withCount(['likes AS post_like' => function ($query) use($userId) {
+            $query->where('user_id', '=', $userId);
+        }])
+        ->limit(10)
+        ->get();
 
         return view('livewire.news-feed-page', [
             'posts' => $this->readyToLoad
