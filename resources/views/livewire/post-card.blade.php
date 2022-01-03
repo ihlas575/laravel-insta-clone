@@ -34,6 +34,9 @@
             <p class="font-semibold text-sm"> {{ $creator }}</p>
             <p>
                 {{ $caption }}
+                @if ($readMore)
+                <span wire:click="readMore" class="text-blue-400 cursor-pointer">read more</span>
+                @endif
             </p>
         </div>
         <p class="text-sm font-medium text-gray-400 pb-1 cursor-pointer">View all 35 comments</p>
