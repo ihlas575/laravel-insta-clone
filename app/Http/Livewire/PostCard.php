@@ -15,6 +15,7 @@ class PostCard extends Component
     public $postId;
     public $postLikes;
     public $ownLike;
+    public $createdTime;
 
     public function mount($post)
     {
@@ -23,8 +24,9 @@ class PostCard extends Component
         $this->caption = $post->caption;
         $this->postLikes = $post->post_like;
         $this->ownLike = $post->own_like;
-        $this->creator = $post->creator->username;
-        $this->profile = $post->creator->profile_url;
+        $this->creator = $post->username;
+        $this->profile = $post->profile_url;
+        $this->createdTime = $post->created_at;
     }
 
     public function render()

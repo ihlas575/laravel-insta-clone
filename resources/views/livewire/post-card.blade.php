@@ -37,7 +37,8 @@
             </p>
         </div>
         <p class="text-sm font-medium text-gray-400 pb-1 cursor-pointer">View all 35 comments</p>
-        <p class="font-normal text-xs lowercase text-gray-500">12 hours ago</p>
+        <p class="font-normal text-xs lowercase text-gray-500">{{ Carbon\Carbon::parse($createdTime)->diffForHumans() }}
+        </p>
     </div>
     <div class="flex justify-between px-4 border-t py-4">
         <div class="flex content-center gap-3">
