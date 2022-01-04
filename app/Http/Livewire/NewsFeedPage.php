@@ -45,13 +45,13 @@ class NewsFeedPage extends Component
                 ->select("posts.*",'users.username', 'users.profile_url',
                 DB::raw("(SELECT COUNT(*) FROM post_likes
                             WHERE post_likes.post_id = posts.id) as post_like"),
+                DB::raw("(SELECT COUNT(*) FROM post_comments
+                            WHERE post_comments.post_id = posts.id) as post_comments"),
                 DB::raw("(SELECT COUNT(*) FROM post_likes
-                WHERE post_likes.post_id = posts.id) as own_like"))
+                            WHERE post_likes.post_id = posts.id) as own_like"))
                 ->join('users', 'users.id', '=', 'posts.user_id')
                 ->latest()
                 ->paginate($this->limitPerPage);
-
-                $this->emit('postStore');
 
         return view('livewire.news-feed-page', [
             'posts' => $this->readyToLoad

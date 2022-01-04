@@ -39,7 +39,34 @@
                 @endif
             </p>
         </div>
-        <p class="text-sm font-medium text-gray-400 pb-1 cursor-pointer">View all 35 comments</p>
+
+        @if ($postComments > 0)
+        <p class="text-sm font-medium text-gray-400 pb-1 cursor-pointer" wire:click="loadComments">
+            View all {{ $postComments }} comments
+        </p>
+        @else
+        <p class="text-sm font-medium text-gray-400 pb-1">
+            {{ $postComments }} comments
+            @endif
+        </p>
+        @foreach ($comments as $comment)
+        <div class="comment flex mb-1">
+            <img src="{{ $comment->profile_url }}" class="h-6 rounded-full mr-3 mt-1" />
+            <div class="flex flex-col">
+                <div class="flex">
+                    <p class="text-sm"><span class="font-semibold text-sm mr-1">{{ $comment->username
+                            }}</span>{{
+                        $comment->comment }}</p>
+                </div>
+                <div class="mt-1">
+                    <p class="text-xs text-gray-500">{{ Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}
+                    </p>
+                </div>
+            </div>
+
+        </div>
+        @endforeach
+        <p class="text-blue-400 text-xs mb-1 cursor-pointer" wire:click="increaseCommentCount">read more</p>
         <p class="font-normal text-xs lowercase text-gray-500">{{ Carbon\Carbon::parse($createdTime)->diffForHumans() }}
         </p>
     </div>

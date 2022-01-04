@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\PostComment;
 use App\Models\PostLike;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Illuminate\Support\Str;
 
@@ -19,6 +21,9 @@ class PostCard extends Component
     public $ownLike;
     public $createdTime;
     public $readMore;
+    public $postComments;
+    public $comments;
+    public $commentCount;
 
     public function mount($post)
     {
@@ -32,6 +37,9 @@ class PostCard extends Component
         $this->profile = $post->profile_url;
         $this->createdTime = $post->created_at;
         $this->readMore = 1;
+        $this->postComments = $post->post_comments;
+        $this->comments = [];
+        $this->commentCount = 2;
     }
 
     public function render()
@@ -50,5 +58,22 @@ class PostCard extends Component
     public function readMore(){
         $this->caption = $this->originalCaption;
         $this->readMore = 0;
+    }
+
+    public function loadComments()
+    {
+        $this->comments = DB::table('post_comments')
+                            ->select('post_comments.*', 'users.username', 'users.profile_url')
+                            ->join('users', 'users.id', '=' , 'post_comments.user_id')
+                            ->where('post_id', $this->postId)
+                            ->latest()
+                            ->limit($this->commentCount)
+                            ->get();
+    }
+
+    public function increaseCommentCount()
+    {
+        $this->commentCount = $this->commentCount + 2;
+        $this->loadComments();        
     }
 }
