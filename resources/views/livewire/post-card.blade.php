@@ -41,7 +41,7 @@
         </div>
 
         @if ($postComments > 0)
-        <p class="text-sm font-medium text-gray-400 pb-1 cursor-pointer" wire:click="loadComments">
+        <p class="text-sm font-medium text-gray-400 pb-1 cursor-pointer">
             View all {{ $postComments }} comments
         </p>
         @else
@@ -51,10 +51,10 @@
         </p>
         @foreach ($comments as $comment)
         <div class="comment flex mb-1">
-            <img src="{{ $comment->profile_url }}" class="h-6 rounded-full mr-3 mt-1" />
+            <img src="{{ $comment->commenter_profile }}" class="h-6 rounded-full mr-3 mt-1" />
             <div class="flex flex-col">
                 <div class="flex">
-                    <p class="text-sm"><span class="font-semibold text-sm mr-1">{{ $comment->username
+                    <p class="text-sm"><span class="font-semibold text-sm mr-1">{{ $comment->commenter_username
                             }}</span>{{
                         $comment->comment }}</p>
                 </div>
@@ -66,7 +66,9 @@
 
         </div>
         @endforeach
+        @if (count($comments) > 0 && $totalCommentCount > $commentCount)
         <p class="text-blue-400 text-xs mb-1 cursor-pointer" wire:click="increaseCommentCount">read more</p>
+        @endif
         <p class="font-normal text-xs lowercase text-gray-500">{{ Carbon\Carbon::parse($createdTime)->diffForHumans() }}
         </p>
     </div>

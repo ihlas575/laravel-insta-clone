@@ -24,6 +24,7 @@ class PostCard extends Component
     public $postComments;
     public $comments;
     public $commentCount;
+    public $totalCommentCount;
 
     public function mount($post)
     {
@@ -40,10 +41,19 @@ class PostCard extends Component
         $this->postComments = $post->post_comments;
         $this->comments = [];
         $this->commentCount = 2;
+        $this->totalCommentCount = $post->post_comments;
     }
 
     public function render()
     {
+        $this->comments = DB::table('post_comments')
+                            ->select('post_comments.*', 'users.username as commenter_username', 'users.profile_url as commenter_profile')
+                            ->join('users', 'users.id', '=' , 'post_comments.user_id')
+                            ->where('post_id', $this->postId)
+                            ->latest()
+                            ->limit($this->commentCount)
+                            ->get();
+
         return view('livewire.post-card');
     }
 
@@ -56,24 +66,12 @@ class PostCard extends Component
     }
 
     public function readMore(){
-        $this->caption = $this->originalCaption;
         $this->readMore = 0;
-    }
-
-    public function loadComments()
-    {
-        $this->comments = DB::table('post_comments')
-                            ->select('post_comments.*', 'users.username', 'users.profile_url')
-                            ->join('users', 'users.id', '=' , 'post_comments.user_id')
-                            ->where('post_id', $this->postId)
-                            ->latest()
-                            ->limit($this->commentCount)
-                            ->get();
+        $this->caption = $this->originalCaption;
     }
 
     public function increaseCommentCount()
     {
-        $this->commentCount = $this->commentCount + 2;
-        $this->loadComments();        
+        $this->commentCount = $this->commentCount + 2;      
     }
 }
