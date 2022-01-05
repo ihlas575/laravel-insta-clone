@@ -72,13 +72,16 @@
         <p class="font-normal text-xs lowercase text-gray-500">{{ Carbon\Carbon::parse($createdTime)->diffForHumans() }}
         </p>
     </div>
-    <div class="flex justify-between px-4 border-t py-4">
-        <div class="flex content-center gap-3">
-            <img loading="lazy"
-                src="https://img.icons8.com/external-justicon-lineal-justicon/64/000000/external-smile-emoji-justicon-lineal-justicon-2.png"
-                class="h-6" />
-            <input type="text" class="px-2 w-96  focus:outline-none" placeholder="Add comment..." />
+    <form wire:submit.prevent="addComment">
+        <div class="flex justify-between px-4 border-t py-4">
+            <div class="flex content-center gap-3">
+                <img loading="lazy"
+                    src="https://img.icons8.com/external-justicon-lineal-justicon/64/000000/external-smile-emoji-justicon-lineal-justicon-2.png"
+                    class="h-6" />
+                <input type="text" class="px-2 w-96  focus:outline-none" wire:model.defer="comment"
+                    placeholder="Add comment..." />
+            </div>
+            <button class="font-semibold text-sm text-blue-500 cursor-pointer">Post</button>
         </div>
-        <p class="font-semibold text-sm text-blue-500 cursor-pointer">Post</p>
-    </div>
+    </form>
 </div>

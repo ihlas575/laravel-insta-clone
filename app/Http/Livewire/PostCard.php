@@ -25,6 +25,7 @@ class PostCard extends Component
     public $comments;
     public $commentCount;
     public $totalCommentCount;
+    public $comment;
 
     public function mount($post)
     {
@@ -73,5 +74,22 @@ class PostCard extends Component
     public function increaseCommentCount()
     {
         $this->commentCount = $this->commentCount + 2;      
+    }
+
+    public function addComment()
+    {
+        $postComment = new PostComment;
+
+        $postComment->comment = $this->comment;
+
+        $postComment->user_id = 1;
+
+        $postComment->post_id = $this->postId;
+
+        $postComment->save();
+
+        $this->comment = '';
+
+        $this->postComments = $this->postComments + 1;
     }
 }
