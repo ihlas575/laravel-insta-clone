@@ -41,8 +41,8 @@
                                         class="h-6 cursor-pointer rounded-full" /></a>
                 </div>
         </div>
-        <div class="grid grid-cols-6 gap-4">
-                <div class="col-start-2 col-span-4">
+        <div class="grid xl:grid-cols-6 md:gap-4">
+                <div class="lg:col-start-2 col-span-4">
                         {{ $slot }}
                 </div>
         </div>
